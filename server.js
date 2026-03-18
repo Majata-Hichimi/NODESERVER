@@ -32,6 +32,11 @@ try {
     console.log(`THE SERVER IS UP ON PORT : ${port}`);
   });
 } catch (ERROR) {
+  //better error handling
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send("SOMETHING BROKE");
+  });
   console.error("ERROR CONSULT LOGS");
 } finally {
   setTimeout(() => {
