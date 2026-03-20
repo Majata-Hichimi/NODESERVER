@@ -47,6 +47,7 @@ try {
     (req, res, next) => {
       res.send("Wiki");
       console.log("This is Majata's wiki");
+      console.log(`The user is an admin : ${req.admin}`);
     },
   );
 
@@ -68,13 +69,16 @@ try {
    */
   function userAutentication(req, res, next) {
     if (
-      req.query.admin === "false" /**pass booleans as strings in middleware */
+      req.query.admin === "true" /**pass booleans as strings in middleware */
     ) {
+      req.admin = true;
       next();
+      return; //to prevent running a method past noxt
     } else {
       res.send("Authentication Failed");
     }
-    console.log(`FAILED LOGIN BY USER`);
+
+    console.log(`FAILED LOGIN BY USER @${req.originalUrl}`);
   }
 } catch (ERROR) {
   //better error handling
